@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp2.Controls.GradientButton"
+             x:Name="this">
+    <ContentView.Resources>
+        <Style x:Key="ButtonTextStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="{Binding TextColor, Source={x:Reference this}}" />
+            <Setter Property="FontSize" Value="{Binding FontSize, Source={x:Reference this}}" />
+            <Setter Property="FontAttributes" Value="{Binding FontAttributes, Source={x:Reference this}}" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+        </Style>
+    </ContentView.Resources>
+
+    <Grid BindingContext="{x:Reference this}"
+          HorizontalOptions="{Binding HorizontalOptions}"
+          VerticalOptions="{Binding VerticalOptions}"
+          MinimumHeightRequest="{Binding HeightRequest}"
+          MinimumWidthRequest="{Binding WidthRequest}">
+        <Border StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="{Binding CornerRadius}"/>
+            </Border.StrokeShape>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="{Binding GradientStartPoint}"
+                                     EndPoint="{Binding GradientEndPoint}">
+                    <GradientStop Color="{Binding GradientStartColor}" 
+                                  Offset="0.0" />
+                    <GradientStop Color="{Binding GradientEndColor}" 
+                                  Offset="1.0" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <Label Text="{Binding Text}"
+               Style="{StaticResource ButtonTextStyle}"
+               Margin="{Binding Padding}" />
+        <!-- Invisible button to handle taps -->
+        <Button BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                Clicked="OnButtonClicked"
+                Command="{Binding Command}"
+                CommandParameter="{Binding CommandParameter}"
+                IsEnabled="{Binding IsEnabled}" />
+    </Grid>
+</ContentView>

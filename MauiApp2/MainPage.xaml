@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MauiApp2.Controls"
+             x:Class="MauiApp2.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="dotnet_bot.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a race car number eight" />
+
+            <Label
+                Text="Hello, World!"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Label
+                Text="Welcome to &#10;.NET Multi-platform App UI"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+
+            <!-- Updated RoundedEntry that allows input but without input line -->
+            <controls:RoundedEntry
+                x:Name="RoundedNameEntry"
+                Placeholder="Enter your name (no input line)"
+                BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
+                CornerRadius="20"
+                HorizontalOptions="Fill" />
+                
+            <!-- Standard entry for comparison -->
+            <Entry
+                x:Name="NameEntry"
+                Placeholder="Standard Entry (with input line)"
+                SemanticProperties.Hint="Enter your name here"
+                HorizontalOptions="Fill" />
+                
+            <!-- Gradient Button (blue to purple) - now top to bottom -->
+            <controls:GradientButton
+                x:Name="GradientButton1"
+                Text="Top-Bottom Gradient"
+                Clicked="OnCounterClicked"
+                CornerRadius="20"
+                GradientStartColor="#4361EE"
+                GradientEndColor="#7209B7"
+                HorizontalOptions="Fill"
+                HeightRequest="50"
+                />
+                
+            <!-- Gradient Button (green to yellow) - now top to bottom -->
+            <controls:GradientButton
+                x:Name="GradientButton2"
+                Text="Top-Bottom Gradient 2"
+                GradientStartColor="#06D6A0"
+                GradientEndColor="#FFD166"
+                GradientStartPoint="0,0"
+                GradientEndPoint="0,1"
+                CornerRadius="20"
+                HorizontalOptions="Fill"
+                HeightRequest="50" />
+                
+            <!-- Standard button for comparison -->
+            <Button
+                x:Name="CounterBtn"
+                Text="Standard Button" 
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Fill"                
+                CornerRadius="20"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
