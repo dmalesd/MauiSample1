@@ -6,10 +6,6 @@
              x:Class="MauiApp2.LoginPage"
              Title="Login">
 
-    <ContentPage.BindingContext>
-        <viewmodels:LoginViewModel />
-    </ContentPage.BindingContext>
-
     <Grid RowDefinitions="Auto,*,Auto"
           Padding="20"
           RowSpacing="20">

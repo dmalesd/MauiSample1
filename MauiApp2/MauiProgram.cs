@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using MauiApp2.Services;
+using MauiApp2.ViewModels;
 
 namespace MauiApp2
 {
@@ -14,6 +16,15 @@ namespace MauiApp2
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            // Register services
+            builder.Services.AddSingleton<AuthService>();
+
+            // Register view models
+            builder.Services.AddTransient<LoginViewModel>();
+
+            // Register pages
+            builder.Services.AddTransient<LoginPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

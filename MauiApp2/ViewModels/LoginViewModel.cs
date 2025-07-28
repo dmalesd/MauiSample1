@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiApp2.Services;
 using System;
 using System.Threading.Tasks;
 
@@ -7,17 +8,30 @@ namespace MauiApp2.ViewModels
 {
     public partial class LoginViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private string username;
+        private readonly AuthService _authService;
 
         [ObservableProperty]
-        private string password;
+        private string username = string.Empty;
+
+        [ObservableProperty]
+        private string password = string.Empty;
 
         [ObservableProperty]
         private bool isLoading;
 
         [ObservableProperty]
-        private string errorMessage;
+        private string errorMessage = string.Empty;
+
+        // Constructor for dependency injection
+        public LoginViewModel(AuthService authService)
+        {
+            _authService = authService;
+        }
+
+        // Parameterless constructor for design-time support
+        public LoginViewModel() : this(new AuthService())
+        {
+        }
 
         [RelayCommand]
         private async Task LoginAsync()
@@ -39,19 +53,20 @@ namespace MauiApp2.ViewModels
                 IsLoading = true;
                 ErrorMessage = string.Empty;
 
-                // Here you would typically call your authentication service
-                // For demo purposes, we'll just simulate a delay and then navigate
-                await Task.Delay(1000);
+                // Call the authentication service
+                var response = await _authService.LoginAsync(Username, Password);
 
-                // Simple validation for demo - in a real app, you would verify credentials with a service
-                if (Username == "user" && Password == "password")
+                if (response.Success)
                 {
+                    // In a real app, you would store the token for future API calls
+                    // For example: SecureStorage.SetAsync("auth_token", response.Token);
+
                     // Navigate to main page on successful login
                     await Shell.Current.GoToAsync("//MainPage");
                 }
                 else
                 {
-                    ErrorMessage = "Invalid username or password";
+                    ErrorMessage = response.ErrorMessage ?? "Authentication failed";
                 }
             }
             catch (Exception ex)
