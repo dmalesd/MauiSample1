@@ -36,5 +36,27 @@ namespace MauiApp2.Api.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<LoginResponse>> RefreshToken(RefreshTokenRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.RefreshToken))
+            {
+                return BadRequest(new LoginResponse
+                {
+                    Success = false,
+                    ErrorMessage = "Refresh token is required"
+                });
+            }
+
+            var response = await _authService.RefreshTokenAsync(request.RefreshToken);
+            
+            if (!response.Success)
+            {
+                return Unauthorized(response);
+            }
+
+            return Ok(response);
+        }
     }
 }
