@@ -7,6 +7,9 @@ using System.Text;
 
 namespace MauiApp2.Api.Services
 {
+    /// <summary>
+    /// Service for handling authentication and token operations
+    /// </summary>
     public class AuthService
     {
         private readonly IConfiguration _configuration;
@@ -18,11 +21,20 @@ namespace MauiApp2.Api.Services
             new User { Id = 2, Username = "admin", Password = "admin123" }
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthService"/> class
+        /// </summary>
+        /// <param name="configuration">The application configuration</param>
         public AuthService(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Validates user credentials and generates authentication tokens
+        /// </summary>
+        /// <param name="request">The login request containing credentials</param>
+        /// <returns>A response with tokens if authentication is successful</returns>
         public async Task<LoginResponse> ValidateUserAsync(LoginRequest request)
         {
             // Simulate network delay to mimic a real database lookup
@@ -62,6 +74,11 @@ namespace MauiApp2.Api.Services
             };
         }
 
+        /// <summary>
+        /// Refreshes an expired JWT token using a refresh token
+        /// </summary>
+        /// <param name="refreshToken">The refresh token</param>
+        /// <returns>A response with new tokens if the refresh is successful</returns>
         public async Task<LoginResponse> RefreshTokenAsync(string refreshToken)
         {
             // Simulate network delay
@@ -100,6 +117,11 @@ namespace MauiApp2.Api.Services
             };
         }
 
+        /// <summary>
+        /// Generates a JWT token for the specified user
+        /// </summary>
+        /// <param name="user">The user for whom to generate the token</param>
+        /// <returns>A JWT token string</returns>
         private string GenerateJwtToken(User user)
         {
             var secretKey = _configuration["JwtSettings:SecretKey"] ?? throw new InvalidOperationException("JWT secret key is not configured");
@@ -128,6 +150,10 @@ namespace MauiApp2.Api.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        /// <summary>
+        /// Generates a cryptographically secure refresh token
+        /// </summary>
+        /// <returns>A Base64-encoded refresh token string</returns>
         private string GenerateRefreshToken()
         {
             var randomNumber = new byte[64];
