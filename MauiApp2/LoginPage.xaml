@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MauiApp2.Controls"
+             xmlns:viewmodels="clr-namespace:MauiApp2.ViewModels"
+             x:Class="MauiApp2.LoginPage"
+             Title="Login">
+
+    <ContentPage.BindingContext>
+        <viewmodels:LoginViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto,*,Auto"
+          Padding="20"
+          RowSpacing="20">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" 
+                             Spacing="5" 
+                             Margin="0,40,0,0">
+            <Image Source="dotnet_bot.svg" 
+                   HeightRequest="100"
+                   HorizontalOptions="Center" />
+            <Label Text="Welcome Back"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,0" />
+            <Label Text="Please sign in to continue"
+                   FontSize="16"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Login Form -->
+        <VerticalStackLayout Grid.Row="1" 
+                             Spacing="15"
+                             VerticalOptions="Center">
+            
+            <!-- Username Entry -->
+            <controls:RoundedEntry Placeholder="Username"
+                                   Text="{Binding Username}"
+                                   BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
+                                   CornerRadius="10" />
+
+            <!-- Password Entry -->
+            <controls:RoundedEntry Placeholder="Password"
+                                   Text="{Binding Password}"
+                                   IsPassword="True"
+                                   BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
+                                   CornerRadius="10" />
+
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotNullOrEmptyBoolConverter}}"
+                   TextColor="Red"
+                   HorizontalOptions="Center" />
+
+            <!-- Login Button -->
+            <Button Text="Login"
+                    Command="{Binding LoginCommand}"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                    Margin="0,10,0,0"
+                    HeightRequest="50"
+                    CornerRadius="25" />
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               HorizontalOptions="Center"
+                               Margin="0,10,0,0" />
+        </VerticalStackLayout>
+
+        <!-- Footer -->
+        <VerticalStackLayout Grid.Row="2" Spacing="10">
+            <Label Text="Don't have an account?"
+                   HorizontalOptions="Center" />
+            <Label Text="Sign Up"
+                   TextColor="{StaticResource Primary}"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
