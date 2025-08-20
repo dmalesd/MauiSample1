@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using MauiApp2.Services;
+﻿using MauiApp2.Services;
 using MauiApp2.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace MauiApp2
 {
@@ -15,6 +15,7 @@ namespace MauiApp2
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcon");
                 });
 
             // Register services
@@ -27,7 +28,7 @@ namespace MauiApp2
             builder.Services.AddTransient<LoginPage>();
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
